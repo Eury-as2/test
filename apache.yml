@@ -1,0 +1,21 @@
+---
+- hosts: webservers
+  become: yes
+
+  tasks:
+  - name: instala httpd
+    yum:
+     name: httpd
+     state: latest
+  - name: crear archivo index.html
+    file:
+     name: /var/www/html/index.html
+     state: touch
+  - name: agregar contenido al index.html
+    lineinfile:
+     line: "Hola a todos"
+     path: /var/www/html/index.html
+  - name: inicia http
+    service:
+     name: httpd
+     state: started
